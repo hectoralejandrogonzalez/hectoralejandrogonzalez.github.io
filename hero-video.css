@@ -1,0 +1,25 @@
+/* Hero background: the magazine on the table, as a looping video behind the name.
+   The video is recorded from the animated scene (the magazine demo), so the page only has to play it. */
+:root {
+  --stage-height: 78vh;     /* how tall the table area is on computers */
+  --name-box-width: 80%;    /* how wide the free box for the name is (top right) */
+  --name-box-height: 64%;   /* how tall that box is */
+}
+.hero { position: relative; isolation: isolate; }
+.stage { position: relative; height: var(--stage-height); min-height: 440px; margin: 0 calc(-1 * var(--gutter)); }
+.scene { position: absolute; inset: 0; overflow: hidden; pointer-events: none; background: var(--bg); }
+.scene video {
+  position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+  object-fit: cover; object-position: 0 70%;   /* on narrower screens the right side is trimmed, so your magazine (left) always shows */
+}
+.name-box {
+  position: absolute; top: 0; right: var(--gutter); width: calc(var(--name-box-width) - var(--gutter)); height: var(--name-box-height);
+  display: flex; align-items: flex-start; justify-content: center; z-index: 2;
+}
+@media (max-width: 760px) {
+  /* phones: as on computers, the name sits over the dark top right of the table; the phone video is taller,
+     with the magazine and its light at the lower left */
+  .stage { height: auto; min-height: 0; aspect-ratio: 1 / 1; }   /* the dark top of the video is trimmed, so the magazine sits closer to the name */
+  .scene video { object-position: 50% 100%; }
+  .name-box { width: calc(94% - var(--gutter)); height: 50%; }
+}
